@@ -6,15 +6,15 @@ await expect(page.locator('[data-test="checkout"]')).toContainText('Total: $0.00
 });
 
 test('Verify adding item to cart and successful payment', async ({ page }) => {
-  await page.goto('about:blank');
   await page.goto('https://coffee-cart.app/');
   await page.locator('[data-test="Espresso_Macchiato"]').click();
   await page.locator('[data-test="checkout"]').click();
   await page.getByRole('textbox', { name: 'Name' }).fill('Olesya');
   await page.getByRole('textbox', { name: 'Name' }).press('Tab');
-  await page.getByRole('textbox', { name: 'Email' }).fill('test@mail.com');
+  await page.getByRole('textbox', { name: 'Email' }).fill('mail@gmail.com');
   await page.getByRole('checkbox', { name: 'Promotion checkbox' }).check();
   await page.getByRole('button', { name: 'Submit' }).click();
+  await expect(page.locator('#app')).toContainText('Thanks for your purchase. Please check your email for payment.');
 });
 
 test('Verify promo after adding 3 items to cart', async ({ page }) => {
@@ -54,3 +54,4 @@ test('Verify input name and email fields for submitting order', async ({ page })
   await page.getByRole('textbox', { name: 'Email' }).fill('test@mail.com');
   await page.getByRole('button', { name: 'Submit' }).click();
 });
+
