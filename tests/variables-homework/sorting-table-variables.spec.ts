@@ -21,11 +21,14 @@ test('checkbox state is changed and counter is updated', async ({ page }) => {
 test('counter is changed when checkbox is unchecked', async ({ page }) => {
     let counterCheckboxes = page.locator("//span[@data-testid='interactions-selected-count']");
     let selectSecondCheckbox = page.locator("//input[@data-testid='interactions-row-select-2']"); 
+    let selectFirstCheckbox = page.locator("//input[@data-testid='interactions-row-select-1']");
+    let selectThirdCheckbox = page.locator("//input[@data-testid='interactions-row-select-3']");
+    let selectFourthCheckbox = page.locator("//input[@data-testid='interactions-row-select-4']");
 
     await page.goto(baseURL);
-    await page.locator("//input[@data-testid='interactions-row-select-1']").check();
-    await page.locator("//input[@data-testid='interactions-row-select-4']").check();
-    await page.locator("//input[@data-testid='interactions-row-select-3']").check();
+    await selectFirstCheckbox.check();
+    await selectFourthCheckbox.check();
+    await selectThirdCheckbox.check();
     await selectSecondCheckbox.check();
 
     await expect(counterCheckboxes).toHaveText('Вибрано: 4');

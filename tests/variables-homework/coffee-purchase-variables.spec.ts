@@ -52,6 +52,7 @@ test('Verify promo after adding 3 items to cart', async ({ page }) => {
   const cafeBreveCoffee = page.locator('[data-test="Cafe_Breve"]');
   const cartLabelPage = page.locator('a[aria-label="Cart page"]');
   let confirmationMessage = page.locator('#app');
+  const selectYesOption = page.locator('.yes');
 
   await flatWhiteCoffee.click();
   await expect(flatWhiteCoffee).toHaveCount(1);
@@ -62,8 +63,8 @@ test('Verify promo after adding 3 items to cart', async ({ page }) => {
   await cafeBreveCoffee.click();
   await expect(cafeBreveCoffee).toHaveCount(1);
 
-  await expect(page.locator('.yes')).toHaveCount(1);
-  await page.locator('.yes').click();
+  await expect(selectYesOption).toHaveCount(1);
+  await selectYesOption.click();
 
   await cartLabelPage.filter({ hasText: 'cart (4)' }).click();
   await expect(cartLabelPage).toHaveCount(1);
@@ -83,6 +84,7 @@ test('Verify manipulation of cart items', async ({ page }) => {
   const removeFlatWhiteFromCart = page.locator('ul:not(.cart-preview) .unit-controller > [aria-label="Remove one Flat White"]');
   const removeAllFlatWhiteFromCart = page.locator('button[aria-label="Remove all Flat White"]');
   const checkout = page.locator('[data-test="checkout"]');
+  const cartLabelPage = page.locator('a[aria-label="Cart page"]');
 
   await mochaCoffee.click();
   await expect(mochaCoffee).toHaveCount(1);
@@ -90,7 +92,7 @@ test('Verify manipulation of cart items', async ({ page }) => {
   await flatWhiteCoffee.click();
   await expect(flatWhiteCoffee).toHaveCount(1);
 
-  await page.locator('a[aria-label="Cart page"]').click();
+  await cartLabelPage.click();
 
   await addMochaToCart.click();
   await expect(addMochaToCart).toHaveCount(1);
@@ -116,8 +118,10 @@ test('Verify input name and email fields for submitting order', async ({ page })
   const checkout = page.locator('[data-test="checkout"]');
   const inputName = page.locator('input[name="name"]');
   const inputEmail = page.locator('input[name="email"]');
+  const espressoMacchiatoCoffee = page.locator('[data-test="Espresso_Macchiato"]');
+  const blockLocator = page.locator('div');
 
-  await page.locator('[data-test="Espresso_Macchiato"]').click();
+  await espressoMacchiatoCoffee.click();
 
   await checkout.click();
   await expect(checkout).toHaveCount(1);
@@ -125,7 +129,7 @@ test('Verify input name and email fields for submitting order', async ({ page })
   await expect(inputName).toBeEmpty();
   await expect(inputName).toHaveCount(1);
 
-  await page.locator('div').filter({ hasText: /^Name$/ }).click();
+  await blockLocator.filter({ hasText: /^Name$/ }).click();
 
   await expect(inputEmail).toBeEmpty();
   await expect(inputEmail).toHaveCount(1);
