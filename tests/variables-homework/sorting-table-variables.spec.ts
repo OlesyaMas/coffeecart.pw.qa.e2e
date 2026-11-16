@@ -4,13 +4,18 @@ const baseURL = 'http://104.168.59.50/laboratory/interactions';
 
 test('default state of checkbox counter is 0', async ({ page }) => {
     await page.goto(baseURL);
-    await expect(page.locator("//span[@data-testid='interactions-selected-count']")).toHaveText('Вибрано: 0');
+    const checkboxCounter = page.locator("//span[@data-testid='interactions-selected-count']");
+    
+    await expect(checkboxCounter).toHaveText('Вибрано: 0');
 });
 
 test('checkbox state is changed and counter is updated', async ({ page }) => {
     await page.goto(baseURL);
-    await page.locator("//input[@data-testid='interactions-row-select-1']").check();
-    await expect(page.locator("//span[@data-testid='interactions-selected-count']")).toHaveText('Вибрано: 1');
+    const checkboxCounter = page.locator("//span[@data-testid='interactions-selected-count']");
+    const selectFirstCheckbox = page.locator("//input[@data-testid='interactions-row-select-1']");
+
+    await selectFirstCheckbox.check();
+    await expect(checkboxCounter).toHaveText('Вибрано: 1');
 });
 
 test('counter is changed when checkbox is unchecked', async ({ page }) => {
